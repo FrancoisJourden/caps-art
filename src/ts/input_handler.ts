@@ -1,5 +1,6 @@
 import type {Offset2d} from "./types";
 import {context, recalculate} from "../main.ts";
+import { save } from "./steps/saver.ts";
 
 const defaultZoom = 1.0;
 const defaultOffset: Offset2d = {x: 0, y: 0};
@@ -38,23 +39,24 @@ export default () => {
     initSaveButton();
 };
 
-function initAutoResize() {
+export function resize() {
     const canvas = context.canvas;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    recalculate();
+}
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        recalculate();
-    }
-
+function initAutoResize() {
     resize();
     window.addEventListener("resize", resize);
 }
 
-function setZoom(newZoom: number) {
+export function setZoom(newZoom: number) {
     zoom = newZoom;
     recalculate();
 }
+
+export const resetZoom=  () => setZoom(defaultZoom); 
 
 function initZoomInput() {
     zoomButton = document.querySelector('#reset_zoom')!;
@@ -64,14 +66,15 @@ function initZoomInput() {
         if (e.deltaY < 0) setZoom(zoom / (-e.deltaY / 100));
         else setZoom(zoom * (e.deltaY / 100));
     })
-    zoomButton.addEventListener("click", () => setZoom(defaultZoom));
+    zoomButton.addEventListener("click", resetZoom);
 }
 
-function setOffset(newOffset: Offset2d) {
+export function setOffset(newOffset: Offset2d) {
     offset = newOffset;
     recalculate();
 }
 
+export const resetOffset = () => setOffset(defaultOffset);
 function initOffsetInput() {
     offsetInput = document.querySelector('#reset_position')!;
     let startX: number;
@@ -97,7 +100,7 @@ function initOffsetInput() {
         context.canvas.removeEventListener("mousemove", onMouseMove);
     }
 
-    offsetInput.addEventListener("click", () => setOffset(defaultOffset));
+    offsetInput.addEventListener("click", resetOffset);
 }
 
 function initIntInput(input: HTMLInputElement, callback: (value: number) => void, defaultValue: number | null = null) {
@@ -161,13 +164,5 @@ function initImageInput() {
 
 function initSaveButton() {
     saveButton = document.querySelector('#save')!;
-    saveButton.addEventListener("click", () => {
-        const url = context.canvas.toDataURL('image.png');
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "caps.png";
-
-        link.click();
-        link.remove();
-    });
+    saveButton.addEventListener("click", save);
 }
