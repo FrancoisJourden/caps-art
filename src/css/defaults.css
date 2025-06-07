@@ -1,0 +1,8 @@
+*{
+    input, select{
+        @apply border rounded border-gray-200 shadow-inner px-1
+    }
+    button{
+        @apply rounded shadow-sm border border-gray-100 hover:cursor-pointer active:shadow-xs
+    }
+}

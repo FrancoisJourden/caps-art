@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Caps art</title>
+    <script type="module" src="/src/main.ts"></script>
+    <link rel="stylesheet" href="/src/style.css"/>
+</head>
+<body class="flex justify-between">
+<main>
+    <canvas id="canvas"></canvas>
+</main>
+<aside id="aside" class="fixed p-1 top-0 right-0">
+    <form id="config" class="flex flex-col p-2 shadow-md rounded-xl border border-gray-100 gap-2 bg-white">
+        <button id="reset_position" type="button">Reset position</button>
+        <button id="reset_zoom" type="button">Reset zoom</button>
+        <div class="flex flex-col">
+            <label for="gap">Séparation (mm)</label>
+            <input id="gap" type="number">
+        </div>
+        <div class="flex flex-col">
+            <label for="diameter">Diamètre capsule (mm)</label>
+            <input id="diameter" type="number">
+        </div>
+        <div class="flex flex-col">
+            <label for="width">Largeur du poster (mm)</label>
+            <input id="width" type="number">
+        </div>
+        <div class="flex flex-col">
+            <label for="height">Hauteur du poster (mm)</label>
+            <input id="height" type="number">
+        </div>
+        <div class="flex flex-col">
+            <label for="image">Image source</label>
+            <input id="image" type="file" accept="image/*">
+        </div>
+        <canvas id="imgRenderer"></canvas>
+        <button id="save" type="button">Enregistrer</button>
+    </form>
+</aside>
+</body>
+</html>
