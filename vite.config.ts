@@ -7,5 +7,6 @@ export default defineConfig({
         alias: {
             "@": "/src",
         }
-    }
+    },
+    base: 'https://francoisjourden.github.io/caps-art/'
 })
