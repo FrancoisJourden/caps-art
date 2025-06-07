@@ -10,6 +10,8 @@ const defaultWidth = 1000;
 const defaultHeight = 1000;
 
 let zoomButton: HTMLButtonElement;
+let zoomBackwardButton: HTMLButtonElement;
+let zoomForwardButton: HTMLButtonElement;
 let offsetInput: HTMLButtonElement;
 let gapInput: HTMLInputElement;
 let diameterInput: HTMLInputElement;
@@ -60,6 +62,9 @@ export const resetZoom=  () => setZoom(defaultZoom);
 
 function initZoomInput() {
     zoomButton = document.querySelector('#reset_zoom')!;
+    zoomBackwardButton = document.querySelector("#zoom_backward")!;
+    zoomForwardButton = document.querySelector("#zoom_forward")!;
+
     context.canvas.addEventListener("wheel", (e) => {
         if (e.deltaY == 0) return;
 
@@ -67,6 +72,8 @@ function initZoomInput() {
         else setZoom(zoom * (e.deltaY / 100));
     })
     zoomButton.addEventListener("click", resetZoom);
+    zoomBackwardButton.addEventListener("click", () => setZoom(zoom * 0.9));
+    zoomForwardButton.addEventListener("click", () => setZoom(zoom * 1.1));
 }
 
 export function setOffset(newOffset: Offset2d) {
